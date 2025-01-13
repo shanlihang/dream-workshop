@@ -6,16 +6,21 @@ import (
 
 	"github.com/duke-git/lancet/v2/strutil"
 	"github.com/gin-gonic/gin"
+	"github.com/shanlihang/dream-workshop/utils"
 )
 
 func main() {
+	// 读取配置信息
+	utils.InitConfig()
+
 	// 创建一个默认的 Gin 引擎
 	r := gin.Default()
 
 	// 定义一个路由处理函数，用于处理根路径的请求
 	r.GET("/", func(c *gin.Context) {
+		fmt.Println(&utils.AppConfig.MongoDB)
 		c.JSON(http.StatusOK, gin.H{
-			"message": "欢迎来到 Gin 框架的世界！",
+			"config": utils.AppConfig,
 		})
 	})
 
