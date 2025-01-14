@@ -7,9 +7,14 @@ import (
 )
 
 type Config struct {
-	MySQL   MySQLConfig `mapstructure:"mysql"`
-	MongoDB MongoConfig `mapstructure:"mongodb"`
-	Redis   RedisConfig `mapstructure:"redis"`
+	Server  ServerConfig `mapstructure:"server"`
+	MySQL   MySQLConfig  `mapstructure:"mysql"`
+	MongoDB MongoConfig  `mapstructure:"mongodb"`
+	Redis   RedisConfig  `mapstructure:"redis"`
+}
+
+type ServerConfig struct {
+	Port string `mapstructure:"port"`
 }
 
 type MySQLConfig struct {

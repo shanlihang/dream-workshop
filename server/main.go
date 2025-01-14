@@ -6,12 +6,14 @@ import (
 
 	"github.com/duke-git/lancet/v2/strutil"
 	"github.com/gin-gonic/gin"
+	"github.com/shanlihang/dream-workshop/global"
 	"github.com/shanlihang/dream-workshop/utils"
 )
 
 func main() {
 	// 读取配置信息
 	utils.InitConfig()
+	global.Config = &utils.AppConfig
 
 	// 创建一个默认的 Gin 引擎
 	r := gin.Default()
@@ -20,7 +22,7 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		fmt.Println(&utils.AppConfig.MongoDB)
 		c.JSON(http.StatusOK, gin.H{
-			"config": utils.AppConfig,
+			"config": global.Config,
 		})
 	})
 
@@ -31,9 +33,8 @@ func main() {
 		})
 	})
 
-	// 在端口 8080 上启动服务器
-	err := r.Run(":8080")
+	err := r.Run(fmt.Sprintf(":%s", global.Config.Server.Port))
 	if err != nil {
-		fmt.Println("启动服务器失败:", err)
+		fmt.Println("启动服务器失败L:", err)
 	}
 }
