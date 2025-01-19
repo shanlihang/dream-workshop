@@ -7,6 +7,6 @@
 <style scoped>
 span {
   font-size: 14px;
-  color: #7f7f7f;
+  color: var(--el-color-info);
 }
 </style>
