@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AsideMenu from "./AsideMenu.vue";
 import CopyRight from "./CopyRight.vue";
+import { useChangeTheme } from "@/utils/theme";
 import { reactive, computed } from "vue";
 import {
   Expand,
@@ -11,21 +12,46 @@ import {
   Search,
 } from "@element-plus/icons-vue";
 import type { SettingType } from "@/types";
+import { ElMessage } from "element-plus";
 
+const { getDarkColor, getLightColor } = useChangeTheme();
 const data = reactive({
   settingDrawer: false,
   collapseMenu: false,
 });
 
 const settingData: SettingType = reactive({
-  menuMode: "group",
+  darkMode: false,
+  menuMode: "level",
   openFooter: true,
-  primaryColor: "#409EFF",
+  primaryColor: "#626aef",
 });
 
 const asideWidth = computed(() => {
   return data.collapseMenu ? "64px" : "300px";
 });
+
+const onPrimaryChange = (val: string) => {
+  if (!settingData.primaryColor) {
+    return ElMessage.warning("主题颜色不能为空");
+  }
+  settingData.primaryColor = val;
+  document.documentElement.style.setProperty(
+    "--el-color-primary-dark-2",
+    `${getDarkColor(settingData.primaryColor, 0.1)}`
+  );
+  document.documentElement.style.setProperty("--el-color-primary", val);
+  for (let i = 1; i <= 9; i++) {
+    document.documentElement.style.setProperty(
+      `--el-color-primary-light-${i}`,
+      `${getLightColor(settingData.primaryColor, i / 10)}`
+    );
+  }
+};
+
+const onChangeDarkMode = (val: boolean) => {
+  console.log(val, settingData.darkMode);
+};
 
 const beforeClose = () => {
   data.settingDrawer = false;
@@ -172,8 +198,15 @@ const handleClosed = () => {
     </el-row>
     <el-divider content-position="left">主题配置</el-divider>
     <el-row justify="space-between" align="middle">
+      <span class="label">暗黑模式</span>
+      <el-switch v-model="settingData.darkMode" @change="onChangeDarkMode" />
+    </el-row>
+    <el-row justify="space-between" align="middle">
       <span class="label">主题颜色</span>
-      <el-color-picker v-model="settingData.primaryColor" show-alpha />
+      <el-color-picker
+        v-model="settingData.primaryColor"
+        @change="onPrimaryChange"
+      />
     </el-row>
     <el-divider></el-divider>
     <el-space style="width: 100%" :fill="true" direction="vertical">
