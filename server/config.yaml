@@ -5,12 +5,13 @@ mysql:
   host: "localhost"
   user: "root"
   password: "67490009"
-  name: "dream"
+  name: "dream_workshop"
   port: 3306
 
 mongodb:
-  uri: "mongodb://localhost:27017"
-  name: "dream"
+  host: "localhost"
+  port: 27017
+  name: "dream_workshop"
 
 redis:
   host: "localhost"

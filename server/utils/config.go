@@ -26,7 +26,8 @@ type MySQLConfig struct {
 }
 
 type MongoConfig struct {
-	URI    string `mapstructure:"uri"`
+	Host   string `mapstructure:"host"`
+	Port   int    `mapstructure:"port"`
 	DBName string `mapstructure:"name"`
 }
 
