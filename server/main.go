@@ -15,6 +15,10 @@ func main() {
 	utils.InitConfig()
 	global.Config = &utils.AppConfig
 
+	// 初始化数据库连接
+	global.MySQL = utils.InitMysql(global.Config.MySQL.Port, global.Config.MySQL.User, global.Config.MySQL.Password, global.Config.MySQL.Host, global.Config.MySQL.DBName)
+	global.MongoDB = utils.InitMongoDB(global.Config.MongoDB.Port, global.Config.MongoDB.Host, global.Config.MongoDB.DBName)
+
 	// 创建一个默认的 Gin 引擎
 	r := gin.Default()
 
