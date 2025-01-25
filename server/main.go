@@ -18,13 +18,13 @@ func main() {
 	// 初始化数据库连接
 	global.MySQL = utils.InitMysql(global.Config.MySQL.Port, global.Config.MySQL.User, global.Config.MySQL.Password, global.Config.MySQL.Host, global.Config.MySQL.DBName)
 	global.MongoDB = utils.InitMongoDB(global.Config.MongoDB.Port, global.Config.MongoDB.Host, global.Config.MongoDB.DBName)
+	global.Minio = utils.InitMinio(global.Config.Minio.UseSSL, global.Config.Minio.Port, global.Config.Minio.Host, global.Config.Minio.AccessKey, global.Config.Minio.SecretKey)
 
 	// 创建一个默认的 Gin 引擎
 	r := gin.Default()
 
 	// 定义一个路由处理函数，用于处理根路径的请求
 	r.GET("/", func(c *gin.Context) {
-		fmt.Println(&utils.AppConfig.MongoDB)
 		c.JSON(http.StatusOK, gin.H{
 			"config": global.Config,
 		})

@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gorm.io/driver/mysql"
@@ -33,4 +35,17 @@ func InitMongoDB(port int, host, database string) *mongo.Database {
 		return nil
 	}
 	return client.Database(database)
+}
+
+func InitMinio(useSSL bool, port int, host, accessKey, secretKey string) *minio.Client {
+	endpoint := fmt.Sprintf("%s:%d", host, port)
+	client, err := minio.New(endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
+		Secure: useSSL,
+	})
+	if err != nil {
+		fmt.Println("minio创建失败，失败原因: ", err)
+		return nil
+	}
+	return client
 }

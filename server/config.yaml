@@ -18,3 +18,10 @@ redis:
   port: 6379
   password: ""
   db: 0
+
+minio:
+  host: "localhost"
+  port: 9000
+  accessKey: "admin"
+  secretKey: "admin"
+  useSSL: false

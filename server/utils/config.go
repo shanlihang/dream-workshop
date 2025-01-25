@@ -11,6 +11,7 @@ type Config struct {
 	MySQL   MySQLConfig  `mapstructure:"mysql"`
 	MongoDB MongoConfig  `mapstructure:"mongodb"`
 	Redis   RedisConfig  `mapstructure:"redis"`
+	Minio   MinioConfig  `mapstructure:"minio"`
 }
 
 type ServerConfig struct {
@@ -36,6 +37,14 @@ type RedisConfig struct {
 	Port     int    `mapstructure:"port"`
 	Password string `mapstructure:"password"`
 	DB       int    `mapstructure:"db"`
+}
+
+type MinioConfig struct {
+	Host      string `mapstructure:"host"`
+	Port      int    `mapstructure:"port"`
+	AccessKey string `mapstructure:"accessKey"`
+	SecretKey string `mapstructure:"secretKey"`
+	UseSSL    bool   `mapstructure:"useSSL"`
 }
 
 var AppConfig Config
