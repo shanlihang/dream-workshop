@@ -6,9 +6,8 @@ export default defineConfig({
   model: {},
   initialState: {},
   request: {},
-  layout: {
-    title: '@umijs/max',
-  },
+  layout: {},
+  conventionLayout: false,
   routes: [
     {
       path: '/',
@@ -32,4 +31,3 @@ export default defineConfig({
   ],
   npmClient: 'pnpm',
 });
-
