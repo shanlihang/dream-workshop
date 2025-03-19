@@ -82,6 +82,22 @@ export default defineConfig({
         },
       ],
     },
+    {
+      name: '用户界面',
+      path: '/account',
+      routes: [
+        {
+          name: '消息',
+          path: '/account/message',
+          component: './account/Message',
+        },
+        {
+          name: '通讯录',
+          path: '/account/address-book',
+          component: './account/AddressBook',
+        },
+      ],
+    },
   ],
   npmClient: 'pnpm',
 });
