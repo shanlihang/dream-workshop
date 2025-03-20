@@ -1,9 +1,6 @@
-import { ExpandOutlined, LogoutOutlined, MessageOutlined, QuestionCircleOutlined, SearchOutlined, SettingOutlined, SyncOutlined } from '@ant-design/icons';
+import { LogoutOutlined, MessageOutlined, QuestionCircleOutlined, SearchOutlined, SettingOutlined, SyncOutlined } from '@ant-design/icons';
 import { RunTimeLayoutConfig, useModel } from '@umijs/max';
-import { Dropdown, Flex, Input, Tooltip, Typography } from 'antd';
-import { useState } from 'react';
-
-const { Text } = Typography;
+import { Dropdown, Input, Tooltip } from 'antd';
 
 export async function getInitialState(): Promise<{ name: string }> {
   return { name: 'slh' };
@@ -11,14 +8,20 @@ export async function getInitialState(): Promise<{ name: string }> {
 
 export const layout: RunTimeLayoutConfig = () => {
   const { pageLoading, setPageLoading, menuPosition, menuType } = useModel('layout');
-  const [menuCollapsed, setMenuCollapsed] = useState(false);
 
   return {
-    title: '梦想工坊',
+    title: 'umi',
     logo: 'https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg',
+    contentStyle: {
+      padding: 0,
+      margin: 0,
+      height: '100vh',
+      overflow: 'hidden',
+    },
     menu: {
       locale: false,
     },
+    breadcrumbRender: false,
     avatarProps: {
       src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
       size: 'small',
@@ -49,7 +52,7 @@ export const layout: RunTimeLayoutConfig = () => {
       },
     },
     siderMenuType: menuType,
-    layout: menuPosition,
+    layout: 'side',
     loading: pageLoading,
     actionsRender: (props) => {
       if (props?.isMobile) return null;
@@ -78,31 +81,10 @@ export const layout: RunTimeLayoutConfig = () => {
         <Tooltip title="清理缓存">
           <SyncOutlined />
         </Tooltip>,
-        <Tooltip title="全屏">
-          <ExpandOutlined />
-        </Tooltip>,
         <Tooltip title="通知">
           <MessageOutlined />
         </Tooltip>,
       ];
-    },
-    menuFooterRender: (menuProps) => {
-      if (menuProps?.collapsed) return null;
-
-      return (
-        <Flex justify="center">
-          <Text type="secondary">Ant Design ({String(menuCollapsed)})</Text>
-        </Flex>
-      );
-    },
-    onCollapse: (collapsed) => {
-      setMenuCollapsed(collapsed);
-    },
-    onPageChange: () => {
-      setPageLoading(true);
-      setTimeout(() => {
-        setPageLoading(false);
-      }, 500);
     },
   };
 };
